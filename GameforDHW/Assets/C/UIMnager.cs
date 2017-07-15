@@ -4,46 +4,79 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIMnager : MonoBehaviour {
     public Image FadeImage;
+    public int itemcount = 0;
+    public int item1count, item2count, item3count;
     private float fade1 = 0;
     private float fade2 = 1;
     private float fade3 = 0;
-    private bool isPlaying = false;
+    private bool isPlaying = false, panel3open = false;
     public Text systemtime;
     public System.DateTime PlayTime;
     public GameObject Mainpanel,Panel1,Panel2,Panel3,Panel4,Panel5,Gamepanel,Resultpanel;
-    private int PanelNumber;
+    public GameObject ItemPanel,BukiItemPanel,MonsterItemPanel;
+    private bool Itempanelopen,Bukiitempanelopen,Monsteritempanelopen;
     public GameObject prevpanel;
+    private int PanelNumber;
     public GameObject Stage1, Stage2, Stage3, Stage4;
-    public GameObject AroundPoint;
-    public GameObject target;
-    public Vector2 startPos;
-    public Vector2 direction;
+    private Vector3 Stage1setposition, Stage2setposition, Stage3setposition, Stage4setposition;
     public bool directionChosen;
-    private bool gamemode;
-    private bool Timer;
-    public ItemManager Inventory;
-    private float itemruting = 0f;
+    public bool gamemode, Timer, fight, takara,Actionmode,attack,damage;
+    public ItemManager ResultInventory,ItemInventory,BukiItemInventory,MonsterItemInventory;
+    private float itemruting = 0f, actiontime=0f;
+    //private float touchspeed = 0;
     public GameObject itemmana1, itemmana2, itemmana3;
+    public GameObject Playerset;
+    float test = 0;
+    public SpriteRenderer PlayerRenderer;
     // Use this for initialization
     void Start () {
+        //GetComponent<Canvas>().enabled = false;
         FadeImage.enabled = false;
         Mainpanel.SetActive(true);
-        Panel1.SetActive(false);
-        Panel2.SetActive(false);
+        Mainpanel.GetComponent<CanvasGroup>().alpha = 1;
+        //Panel1.GetComponent<GameObject>().
+        Panel1.SetActive(true);
+        Panel1.GetComponent<CanvasGroup>().alpha = 0;
+        Panel2.SetActive(true);
+        Panel2.GetComponent<CanvasGroup>().alpha = 0;
         Panel3.SetActive(false);
-        Panel4.SetActive(false);
-        Panel5.SetActive(false);
-        Gamepanel.SetActive(false);
-        Resultpanel.SetActive(false);
+        //Panel3.GetComponent<CanvasGroup>().alpha = 0;
+        Panel4.SetActive(true);
+        Panel4.GetComponent<CanvasGroup>().alpha = 0;
+        Panel5.SetActive(true);
+        Panel5.GetComponent<CanvasGroup>().alpha = 0;
+        Gamepanel.SetActive(true);
+        Gamepanel.GetComponent<CanvasGroup>().alpha = 0;
+        Resultpanel.SetActive(true);
+        Resultpanel.GetComponent<CanvasGroup>().alpha = 0;
+        ItemPanel.SetActive(true);
+        ItemPanel.GetComponent<CanvasGroup>().alpha = 0;
+        BukiItemPanel.SetActive(true);
+        BukiItemPanel.GetComponent<CanvasGroup>().alpha = 0;
+        MonsterItemPanel.SetActive(true);
+        MonsterItemPanel.GetComponent<CanvasGroup>().alpha = 0;
+        PlayerRenderer.enabled = false;
+        //ItemPanel.SetActive(false);
+        Itempanelopen = false;
+        Bukiitempanelopen = false;
+        Monsteritempanelopen = false;
         prevpanel = Mainpanel;
         PanelNumber = 0;
         gamemode = false;
         Timer = false;
+        fight = false;
+        Actionmode = false;
+        attack = false;
+        damage = false;
+        Stage1setposition = Stage1.transform.position;
+        Stage2setposition = Stage2.transform.position;
+        Stage3setposition = Stage3.transform.position;
+        Stage4setposition = Stage4.transform.position;
     }
 
     // Update is called once per frame
     void Update () {
-        if (Input.touchCount > 0)
+       /* if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
             // Handle finger movements based on touch phase.
@@ -53,16 +86,19 @@ public class UIMnager : MonoBehaviour {
                 case TouchPhase.Began:
                     startPos = touch.position;
                     directionChosen = false;
+                    touchspeed = 0;
                     break;
                 // Determine direction by comparing the current touch position with the initial one.
                 case TouchPhase.Moved:
-                    direction = touch.position - startPos;
+                    //direction = touch.position - startPos;
+                    touchspeed = 50f;
                     break;                // Report that a direction has been chosen when the finger is lifted.
                 case TouchPhase.Ended:
                     directionChosen = true;
+                    touchspeed = 0;
                     break;
             }
-        }
+        }*/
         if (directionChosen)
         {
             // Something that uses the chosen direction...
@@ -80,59 +116,50 @@ public class UIMnager : MonoBehaviour {
         }
         else if (PlayTime.Minute == 0 && PlayTime.Second == 0 && gamemode == true)
         {
-            Resultpanel.SetActive(true);
+            Resultpanel.GetComponent<CanvasGroup>().alpha = 1;
             Timer = false;
         }
         systemtime.text = PlayTime.Hour.ToString()+" : "+PlayTime.Minute.ToString() + " : " + PlayTime.Second.ToString();
-        Vector3 UPAxis = AroundPoint.transform.TransformDirection(Vector3.up);
-        Vector3 DOWNAxis = AroundPoint.transform.TransformDirection(Vector3.down);
-        // Stage1.transform.RotateAround(target.transform.position, UPAxis, 50f * Time.deltaTime);
-        Stage1.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-        // Stage2.transform.RotateAround(target.transform.position, UPAxis, 50f * Time.deltaTime);
-        Stage2.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-        // Stage3.transform.RotateAround(target.transform.position, UPAxis, 50f * Time.deltaTime);
-        Stage3.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-        // Stage4.transform.RotateAround(target.transform.position, UPAxis, 50f * Time.deltaTime);
-        Stage4.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-        if (startPos.x > direction.x) { 
-            //Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;{
-            Stage1.transform.RotateAround(target.transform.position, UPAxis, 50f * Time.deltaTime);
-            Stage2.transform.RotateAround(target.transform.position, UPAxis, 50f * Time.deltaTime);
-            Stage3.transform.RotateAround(target.transform.position, UPAxis, 50f * Time.deltaTime);
-            Stage4.transform.RotateAround(target.transform.position, UPAxis, 50f * Time.deltaTime);
-           // Debug.Log(startPos.x);
-           // Debug.Log(direction.x);
-        }
-        else if (startPos.x < direction.x)
-        {
-            Stage1.transform.RotateAround(target.transform.position, DOWNAxis, 50f * Time.deltaTime);
-            Stage2.transform.RotateAround(target.transform.position, DOWNAxis, 50f * Time.deltaTime);
-            Stage3.transform.RotateAround(target.transform.position, DOWNAxis, 50f * Time.deltaTime);
-            Stage4.transform.RotateAround(target.transform.position, DOWNAxis, 50f * Time.deltaTime);
-           // Debug.Log(startPos.x);
-           // Debug.Log(direction.x);
-        }
-
         if (Input.GetKey(KeyCode.A))
         {
             //Inventory.AddItem(itemmana.GetComponent<Item>());
             Debug.Log("aa");
         }
-            if (gamemode== true && Timer==true && itemruting + 10f < Time.time)
+        if (gamemode == true && Timer == true && itemruting + actiontime < Time.time && Actionmode == false)
         {
-            itemruting = Time.time;
-            float rand = Random.Range(0, 99);
-            if (rand <= 30)
+
+            float actioncount = Random.Range(0, 29);
+            if(actioncount <= 15)
             {
-                Inventory.AddItem(itemmana1.GetComponent<Item>());
-            }
-            else if (rand >= 31 && rand <= 70)
-            {
-                Inventory.AddItem(itemmana2.GetComponent<Item>());
+                itemruting = Time.time;
+                actiontime = Random.Range(5, 10);
+                float rand = Random.Range(0, 99);
+                if (rand <= 33)
+                {
+                    ResultInventory.AddItem(itemmana1.GetComponent<Item>());
+                    item1count++;
+                }
+                else if (rand >= 34 && rand <= 67)
+                {
+                    ResultInventory.AddItem(itemmana2.GetComponent<Item>());
+                    item2count++;
+                }
+                else
+                {
+                    ResultInventory.AddItem(itemmana3.GetComponent<Item>());
+                    item3count++;
+                }
+                itemcount++;
             }
             else
             {
-                Inventory.AddItem(itemmana3.GetComponent<Item>());
+
+                actiontime = Random.Range(5, 10);
+                itemruting = Time.time;
+                Actionmode = true;
+                test = Random.Range(0, 10);
+                Invoke("TEST",1f);
+                
             }
         }
 }
@@ -160,33 +187,49 @@ public class UIMnager : MonoBehaviour {
         switch (PanelNumber)
         {
             case 0:
-                Mainpanel.SetActive(true);
-                prevpanel.SetActive(false);
+                Panel3.SetActive(false);
+                PlayerRenderer.enabled = false;
+                Mainpanel.GetComponent<CanvasGroup>().alpha = 1;
+                prevpanel.GetComponent<CanvasGroup>().alpha = 0;
+                prevpanel.GetComponent<Image>().raycastTarget = false;
                 break;
             case 1:
-                Mainpanel.SetActive(false);
-                prevpanel.SetActive(true);
+                Mainpanel.GetComponent<CanvasGroup>().alpha = 0;
+                prevpanel.GetComponent<CanvasGroup>().alpha = 1;
+                prevpanel.GetComponent<Image>().raycastTarget = true;
                 break;
             case 2:
-                Mainpanel.SetActive(false);
-                prevpanel.SetActive(true);
+                Mainpanel.GetComponent<CanvasGroup>().alpha = 0;
+                prevpanel.GetComponent<CanvasGroup>().alpha = 1;
+                prevpanel.GetComponent<Image>().raycastTarget = true;
                 break;
             case 3:
-                Mainpanel.SetActive(false);
-                prevpanel.SetActive(true);
+                Mainpanel.GetComponent<CanvasGroup>().alpha = 0;
+                Panel3.SetActive(true);
+                Stage1.transform.position = Stage1setposition;
+                Stage2.transform.position = Stage2setposition;
+                Stage3.transform.position = Stage3setposition;
+                Stage4.transform.position = Stage4setposition;
                 break;
             case 4:
-                Mainpanel.SetActive(false);
-                prevpanel.SetActive(true);
+                Mainpanel.GetComponent<CanvasGroup>().alpha = 0;
+                prevpanel.GetComponent<CanvasGroup>().alpha = 1;
+                prevpanel.GetComponent<Image>().raycastTarget = true;
                 break;
             case 5:
-                Mainpanel.SetActive(false);
-                prevpanel.SetActive(true);
+                Mainpanel.GetComponent<CanvasGroup>().alpha = 0;
+                prevpanel.GetComponent<CanvasGroup>().alpha = 1;
+                prevpanel.GetComponent<Image>().raycastTarget = true;
+
                 break;
             case 6:
-                Mainpanel.SetActive(false);
                 Panel3.SetActive(false);
-                prevpanel.SetActive(true);
+                panel3open = false;
+                Mainpanel.GetComponent<CanvasGroup>().alpha = 0;
+                prevpanel.GetComponent<CanvasGroup>().alpha = 1;
+                prevpanel.GetComponent<Image>().raycastTarget = true;
+                PlayerRenderer.enabled = true;
+                
                 break;
             default:
                 break;
@@ -212,13 +255,13 @@ public class UIMnager : MonoBehaviour {
     }
     public void panel1()
     {
-        PanelNumber = 1;
-        prevpanel = Panel1;
+            PanelNumber = 1;
+            prevpanel = Panel1;
     }
     public void panel2()
     {
-        PanelNumber = 2;
-        prevpanel = Panel2;
+            PanelNumber = 2;
+            prevpanel = Panel2;
     }
     public void panel3()
     {
@@ -226,7 +269,7 @@ public class UIMnager : MonoBehaviour {
         {
             PanelNumber = 3;
             prevpanel = Panel3;
-            Resultpanel.SetActive(false);
+            Resultpanel.GetComponent<CanvasGroup>().alpha = 0;
         }
         else
         {
@@ -250,15 +293,117 @@ public class UIMnager : MonoBehaviour {
         gamemode = true;
         PanelNumber = 6;
         prevpanel = Gamepanel;
-        PlayTime = PlayTime.AddMinutes(1);
+        PlayTime = PlayTime.AddMinutes(3);
+        panel3open = false;
+        actiontime = Random.Range(5, 10);
     }
     public void resultOK()
     {
         PanelNumber = 0;
         gamemode = false;
+        PlayerRenderer.enabled = false;
+        for (int i = itemcount; i != 0; i--)
+        {
+            if (item1count != 0)
+            {
+                item1count--;
+                BukiItemInventory.AddItem(itemmana1.GetComponent<Item>());
+            }
+            else if (item2count != 0)
+            {
+                item2count--;
+                BukiItemInventory.AddItem(itemmana2.GetComponent<Item>());
+            }
+            else
+            {
+                item3count--;
+                BukiItemInventory.AddItem(itemmana3.GetComponent<Item>());
+            }
+        }
+        //BukiItemInventory.AddItem(ResultInventory.GetComponent<Item>());
     }
     public void BackPanel()
     {
         PanelNumber = 0;
+    }
+    public void Itempanel()
+    {
+        if (Itempanelopen==false || Bukiitempanelopen== true||Monsteritempanelopen==true)
+        {
+            ItemPanel.GetComponent<CanvasGroup>().alpha = 1;
+            BukiItemPanel.GetComponent<CanvasGroup>().alpha = 0;
+            MonsterItemPanel.GetComponent<CanvasGroup>().alpha = 0;
+            Itempanelopen = true;
+            Bukiitempanelopen = false;
+            Monsteritempanelopen = false;
+        }
+        else
+        {
+            ItemPanel.GetComponent<CanvasGroup>().alpha = 0;
+            Itempanelopen = false;
+        }
+    }
+    public void BukiItempanel()
+    {
+        if (Itempanelopen == true || Bukiitempanelopen == false || Monsteritempanelopen == true)
+        {
+            ItemPanel.GetComponent<CanvasGroup>().alpha = 0;
+            BukiItemPanel.GetComponent<CanvasGroup>().alpha = 1;
+            MonsterItemPanel.GetComponent<CanvasGroup>().alpha = 0;
+            Itempanelopen = false;
+            Bukiitempanelopen = true;
+            Monsteritempanelopen = false;
+        }
+        else
+        {
+            BukiItemPanel.GetComponent<CanvasGroup>().alpha = 0;
+            Bukiitempanelopen = false;
+        }
+    }
+    public void MonsterItempanel()
+    {
+        if (Itempanelopen == true || Bukiitempanelopen == true || Monsteritempanelopen == false)
+        {
+            ItemPanel.GetComponent<CanvasGroup>().alpha = 0;
+            BukiItemPanel.GetComponent<CanvasGroup>().alpha = 0;
+            MonsterItemPanel.GetComponent<CanvasGroup>().alpha = 1;
+            Itempanelopen = false;
+            Bukiitempanelopen = false;
+            Monsteritempanelopen = true;
+        }
+        else
+        {
+            MonsterItemPanel.GetComponent<CanvasGroup>().alpha = 0;
+            Monsteritempanelopen = false;
+        }
+    }
+    public void TEST()
+    {
+
+        if (test <= 4)
+        {
+            attack = true;
+        }
+        else
+        {
+            damage = true;
+        }
+        float rand = Random.Range(0, 99);
+        if (rand <= 33)
+        {
+            ResultInventory.AddItem(itemmana1.GetComponent<Item>());
+            item1count++;
+        }
+        else if (rand >= 34 && rand <= 67)
+        {
+            ResultInventory.AddItem(itemmana2.GetComponent<Item>());
+            item2count++;
+        }
+        else
+        {
+            ResultInventory.AddItem(itemmana3.GetComponent<Item>());
+            item3count++;
+        }
+        itemcount++;
     }
 }

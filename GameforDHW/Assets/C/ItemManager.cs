@@ -19,12 +19,10 @@ public class ItemManager : MonoBehaviour {
     public GameObject slotPrefab;
 
     private List<GameObject> allSlots;
-
     private int emptySlot;
 	// Use this for initialization
 	void Start () {
         CreateLayout();
-
     }
 	
 	// Update is called once per frame
