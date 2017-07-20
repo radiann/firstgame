@@ -10,10 +10,12 @@ public class UIMnager : MonoBehaviour {
     private float fade2 = 1;
     private float fade3 = 0;
     private bool isPlaying = false, panel3open = false;
-    public Text systemtime;
-    public System.DateTime PlayTime;
+    public Text KAISOU;
+    public int kaisou,finishikaisou,rememberkaisou;
+    //public System.DateTime PlayTime;
     public GameObject Mainpanel,Panel1,Panel2,Panel3,Panel4,Panel5,Gamepanel,Resultpanel;
     public GameObject ItemPanel,BukiItemPanel,MonsterItemPanel;
+    public GameObject storyscroll,kaisouscroll;
     private bool Itempanelopen,Bukiitempanelopen,Monsteritempanelopen;
     public GameObject prevpanel;
     private int PanelNumber;
@@ -22,7 +24,7 @@ public class UIMnager : MonoBehaviour {
     public bool directionChosen;
     public bool gamemode, Timer, fight, takara,Actionmode,attack,damage;
     public ItemManager ResultInventory,ItemInventory,BukiItemInventory,MonsterItemInventory;
-    private float itemruting = 0f, actiontime=0f;
+    private float itemruting = 0f, actiontime=0f,kaisoutime = 0f;
     //private float touchspeed = 0;
     public GameObject itemmana1, itemmana2, itemmana3;
     public GameObject Playerset;
@@ -55,6 +57,8 @@ public class UIMnager : MonoBehaviour {
         BukiItemPanel.GetComponent<CanvasGroup>().alpha = 0;
         MonsterItemPanel.SetActive(true);
         MonsterItemPanel.GetComponent<CanvasGroup>().alpha = 0;
+        storyscroll.SetActive(false);
+        kaisouscroll.SetActive(false);
         PlayerRenderer.enabled = false;
         //ItemPanel.SetActive(false);
         Itempanelopen = false;
@@ -103,7 +107,7 @@ public class UIMnager : MonoBehaviour {
         {
             // Something that uses the chosen direction...
         }
-        Debug.Log(PlayTime.Minute + " : " + PlayTime.Second);
+        /*
         if (PlayTime.Minute>0&&gamemode== true)
         {
             Timer = true;
@@ -119,11 +123,30 @@ public class UIMnager : MonoBehaviour {
             Resultpanel.GetComponent<CanvasGroup>().alpha = 1;
             Timer = false;
         }
-        systemtime.text = PlayTime.Hour.ToString()+" : "+PlayTime.Minute.ToString() + " : " + PlayTime.Second.ToString();
+        
         if (Input.GetKey(KeyCode.A))
         {
             //Inventory.AddItem(itemmana.GetComponent<Item>());
             Debug.Log("aa");
+        }*/
+        KAISOU.text = kaisou.ToString();
+        Debug.Log(finishikaisou);
+        if(gamemode == true && kaisou != finishikaisou)
+        {
+            Timer = true;
+            kaisoutime += Time.deltaTime;
+            if(kaisoutime >= 5+kaisou * 3)
+            {
+                kaisou+=1;
+                kaisoutime = 0;
+                rememberkaisou = kaisou;
+            }
+        }
+        else if(gamemode == true && kaisou <= finishikaisou)
+        {
+            Timer = false;
+            kaisoutime = 0;
+            Resultpanel.GetComponent<CanvasGroup>().alpha = 1;
         }
         if (gamemode == true && Timer == true && itemruting + actiontime < Time.time && Actionmode == false)
         {
@@ -159,7 +182,6 @@ public class UIMnager : MonoBehaviour {
                 Actionmode = true;
                 test = Random.Range(0, 10);
                 Invoke("TEST",1f);
-                
             }
         }
 }
@@ -206,6 +228,7 @@ public class UIMnager : MonoBehaviour {
             case 3:
                 Mainpanel.GetComponent<CanvasGroup>().alpha = 0;
                 Panel3.SetActive(true);
+                storyscroll.SetActive(false);
                 Stage1.transform.position = Stage1setposition;
                 Stage2.transform.position = Stage2setposition;
                 Stage3.transform.position = Stage3setposition;
@@ -253,6 +276,14 @@ public class UIMnager : MonoBehaviour {
         isPlaying = false;
         FadeImage.enabled = false;
     }
+    public void StoryScroll()
+    {
+        storyscroll.SetActive(true);
+    }
+    public void KaisouScroll()
+    {
+        kaisouscroll.SetActive(true);
+    }
     public void panel1()
     {
             PanelNumber = 1;
@@ -293,7 +324,6 @@ public class UIMnager : MonoBehaviour {
         gamemode = true;
         PanelNumber = 6;
         prevpanel = Gamepanel;
-        PlayTime = PlayTime.AddMinutes(3);
         panel3open = false;
         actiontime = Random.Range(5, 10);
     }
