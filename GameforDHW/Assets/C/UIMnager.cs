@@ -9,20 +9,21 @@ public class UIMnager : MonoBehaviour {
     private float fade1 = 0;
     private float fade2 = 1;
     private float fade3 = 0;
-    private bool isPlaying = false, panel3open = false;
+    private bool isPlaying = false;
     public Text KAISOU;
     public int kaisou,finishikaisou,rememberkaisou;
     //public System.DateTime PlayTime;
+    public GameObject SIRO;
     public GameObject Mainpanel,Panel1,Panel2,Panel3,Panel4,Panel5,Gamepanel,Resultpanel;
     public GameObject ItemPanel,BukiItemPanel,MonsterItemPanel;
     public GameObject storyscroll,kaisouscroll;
     private bool Itempanelopen,Bukiitempanelopen,Monsteritempanelopen;
     public GameObject prevpanel;
-    private int PanelNumber;
+    public int PanelNumber;
     public GameObject Stage1, Stage2, Stage3, Stage4;
     private Vector3 Stage1setposition, Stage2setposition, Stage3setposition, Stage4setposition;
     public bool directionChosen;
-    public bool gamemode, Timer, fight, takara,Actionmode,attack,damage;
+    public bool gamemode, Timer, fight, takara,Actionmode,attack,damage, MainPANEL = true;
     public ItemManager ResultInventory,ItemInventory,BukiItemInventory,MonsterItemInventory;
     private float itemruting = 0f, actiontime=0f,kaisoutime = 0f;
     //private float touchspeed = 0;
@@ -80,6 +81,14 @@ public class UIMnager : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        if (MainPANEL)
+        {
+            SIRO.SetActive(true);
+        }
+        else
+        {
+            SIRO.SetActive(false);
+        }
        /* if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -214,16 +223,19 @@ public class UIMnager : MonoBehaviour {
                 Mainpanel.GetComponent<CanvasGroup>().alpha = 1;
                 prevpanel.GetComponent<CanvasGroup>().alpha = 0;
                 prevpanel.GetComponent<Image>().raycastTarget = false;
+                MainPANEL = true;
                 break;
             case 1:
                 Mainpanel.GetComponent<CanvasGroup>().alpha = 0;
                 prevpanel.GetComponent<CanvasGroup>().alpha = 1;
                 prevpanel.GetComponent<Image>().raycastTarget = true;
+                MainPANEL = false;
                 break;
             case 2:
                 Mainpanel.GetComponent<CanvasGroup>().alpha = 0;
                 prevpanel.GetComponent<CanvasGroup>().alpha = 1;
                 prevpanel.GetComponent<Image>().raycastTarget = true;
+                MainPANEL = false;
                 break;
             case 3:
                 Mainpanel.GetComponent<CanvasGroup>().alpha = 0;
@@ -233,26 +245,28 @@ public class UIMnager : MonoBehaviour {
                 Stage2.transform.position = Stage2setposition;
                 Stage3.transform.position = Stage3setposition;
                 Stage4.transform.position = Stage4setposition;
+                MainPANEL = false;
                 break;
             case 4:
                 Mainpanel.GetComponent<CanvasGroup>().alpha = 0;
                 prevpanel.GetComponent<CanvasGroup>().alpha = 1;
                 prevpanel.GetComponent<Image>().raycastTarget = true;
+                MainPANEL = false;
                 break;
             case 5:
                 Mainpanel.GetComponent<CanvasGroup>().alpha = 0;
                 prevpanel.GetComponent<CanvasGroup>().alpha = 1;
                 prevpanel.GetComponent<Image>().raycastTarget = true;
-
+                MainPANEL = false;
                 break;
             case 6:
                 Panel3.SetActive(false);
-                panel3open = false;
+                //panel3open = false;
                 Mainpanel.GetComponent<CanvasGroup>().alpha = 0;
                 prevpanel.GetComponent<CanvasGroup>().alpha = 1;
                 prevpanel.GetComponent<Image>().raycastTarget = true;
                 PlayerRenderer.enabled = true;
-                
+                MainPANEL = false;
                 break;
             default:
                 break;
@@ -324,7 +338,7 @@ public class UIMnager : MonoBehaviour {
         gamemode = true;
         PanelNumber = 6;
         prevpanel = Gamepanel;
-        panel3open = false;
+        //panel3open = false;
         actiontime = Random.Range(5, 10);
     }
     public void resultOK()
