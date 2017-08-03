@@ -5,13 +5,13 @@ using UnityEngine;
 public class ImageRotate : MonoBehaviour {
     public GameObject AroundPoint;
     public GameObject target;
-    public Vector2 startPos;
-    public Vector2 direction;
-    public Vector2 savePos;
-    public float touchspeed;
-    public float Pow;
-    public float Timer;
-    public float nomalspeed;
+    private Vector2 startPos;
+    private Vector2 direction;
+    private Vector2 savePos;
+    private float touchspeed;
+    private float Pow;
+    private float Timer;
+    private float nomalspeed;
     private bool kansei;
     private bool istouch;
 	// Use this for initialization

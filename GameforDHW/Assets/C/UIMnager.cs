@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class UIMnager : MonoBehaviour {
-    public Image FadeImage;
+    public Image FadeImage,RotationImageSet,Rotationimage1, Rotationimage2, Rotationimage3, Rotationimage4, Rotationimage5, Rotationimage6;
     public int itemcount = 0;
     public int item1count, item2count, item3count;
     private float fade1 = 0;
@@ -25,12 +25,13 @@ public class UIMnager : MonoBehaviour {
     public bool directionChosen;
     public bool gamemode, Timer, fight, takara,Actionmode,attack,damage, MainPANEL = true;
     public ItemManager ResultInventory,ItemInventory,BukiItemInventory,MonsterItemInventory;
-    private float itemruting = 0f, actiontime=0f,kaisoutime = 0f;
+    private float itemruting = 0f, actiontime = 0f, kaisoutime = 0f, saveimagerotation, nextimagerotation;
     //private float touchspeed = 0;
     public GameObject itemmana1, itemmana2, itemmana3;
     public GameObject Playerset;
     float test = 0;
     public SpriteRenderer PlayerRenderer;
+    //private Vector2 StartPos, SavePos, Direction;
     // Use this for initialization
     void Start () {
         //GetComponent<Canvas>().enabled = false;
@@ -77,6 +78,7 @@ public class UIMnager : MonoBehaviour {
         Stage2setposition = Stage2.transform.position;
         Stage3setposition = Stage3.transform.position;
         Stage4setposition = Stage4.transform.position;
+        saveimagerotation = 0.0f;
     }
 
     // Update is called once per frame
@@ -89,29 +91,53 @@ public class UIMnager : MonoBehaviour {
         {
             SIRO.SetActive(false);
         }
-       /* if (Input.touchCount > 0)
+        
+        if (Input.GetMouseButtonDown(0))
         {
-            Touch touch = Input.GetTouch(0);
-            // Handle finger movements based on touch phase.
-            switch (touch.phase)
+           nextimagerotation += 60.0f;
+           
+           iTween.RotateTo(RotationImageSet.gameObject, iTween.Hash("z", nextimagerotation, "islocal", true));
+           if(nextimagerotation >= 360)
             {
-                // Record initial touch position.
-                case TouchPhase.Began:
-                    startPos = touch.position;
-                    directionChosen = false;
-                    touchspeed = 0;
-                    break;
-                // Determine direction by comparing the current touch position with the initial one.
-                case TouchPhase.Moved:
-                    //direction = touch.position - startPos;
-                    touchspeed = 50f;
-                    break;                // Report that a direction has been chosen when the finger is lifted.
-                case TouchPhase.Ended:
-                    directionChosen = true;
-                    touchspeed = 0;
-                    break;
+                nextimagerotation = 0;
             }
-        }*/
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            nextimagerotation -= 60.0f;
+            iTween.RotateTo(RotationImageSet.gameObject, iTween.Hash("z", nextimagerotation, "islocal", true));
+            if (nextimagerotation <= -360)
+            {
+                nextimagerotation = 0;
+            }
+        }
+
+
+        Debug.Log("Savero" + saveimagerotation);
+        Debug.Log("Nextro" + nextimagerotation);
+        /* if (Input.touchCount > 0)
+         {
+             Touch touch = Input.GetTouch(0);
+             // Handle finger movements based on touch phase.
+             switch (touch.phase)
+             {
+                 // Record initial touch position.
+                 case TouchPhase.Began:
+                     startPos = touch.position;
+                     directionChosen = false;
+                     touchspeed = 0;
+                     break;
+                 // Determine direction by comparing the current touch position with the initial one.
+                 case TouchPhase.Moved:
+                     //direction = touch.position - startPos;
+                     touchspeed = 50f;
+                     break;                // Report that a direction has been chosen when the finger is lifted.
+                 case TouchPhase.Ended:
+                     directionChosen = true;
+                     touchspeed = 0;
+                     break;
+             }
+         }*/
         if (directionChosen)
         {
             // Something that uses the chosen direction...
@@ -185,7 +211,6 @@ public class UIMnager : MonoBehaviour {
             }
             else
             {
-
                 actiontime = Random.Range(5, 10);
                 itemruting = Time.time;
                 Actionmode = true;
@@ -282,7 +307,7 @@ public class UIMnager : MonoBehaviour {
 
         while (color.a > 0f)
         {
-            fade3 += Time.deltaTime;;
+            fade3 += Time.deltaTime;
             color.a = Mathf.Lerp(fade2, fade1, fade3 *2);
             FadeImage.color = color;
             yield return null;

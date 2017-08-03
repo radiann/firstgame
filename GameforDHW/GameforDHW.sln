@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameForDHW.Plugins", "GameForDHW.Plugins.csproj", "{6F6AB914-3476-3383-D1A3-795A7FB41EEF}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameForDHW", "GameForDHW.csproj", "{806AF487-85FF-41AF-523B-D3DE6F0F0D36}"
 EndProject
 Global
@@ -9,6 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6F6AB914-3476-3383-D1A3-795A7FB41EEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F6AB914-3476-3383-D1A3-795A7FB41EEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F6AB914-3476-3383-D1A3-795A7FB41EEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F6AB914-3476-3383-D1A3-795A7FB41EEF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{806AF487-85FF-41AF-523B-D3DE6F0F0D36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{806AF487-85FF-41AF-523B-D3DE6F0F0D36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{806AF487-85FF-41AF-523B-D3DE6F0F0D36}.Release|Any CPU.ActiveCfg = Release|Any CPU
