@@ -31,7 +31,6 @@ public class UIMnager : MonoBehaviour {
     public GameObject Playerset;
     float test = 0;
     public SpriteRenderer PlayerRenderer;
-    //private Vector2 StartPos, SavePos, Direction;
     // Use this for initialization
     void Start () {
         //GetComponent<Canvas>().enabled = false;
@@ -266,6 +265,7 @@ public class UIMnager : MonoBehaviour {
                 Mainpanel.GetComponent<CanvasGroup>().alpha = 0;
                 Panel3.SetActive(true);
                 storyscroll.SetActive(false);
+                kaisouscroll.SetActive(false);
                 Stage1.transform.position = Stage1setposition;
                 Stage2.transform.position = Stage2setposition;
                 Stage3.transform.position = Stage3setposition;

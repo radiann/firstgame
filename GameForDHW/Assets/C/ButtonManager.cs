@@ -30,4 +30,14 @@ public class ButtonManager : MonoBehaviour {
     {
         UImanager.finishikaisou = 10;
     }
+    public void sarubezi()
+    {
+        //UImanager.gamemode = false;
+    }
+    public void ItemReturn()
+    {
+        UImanager.gamemode = false;
+        UImanager.Timer = false;
+        UImanager.Resultpanel.GetComponent<CanvasGroup>().alpha = 1;
+    }
 }

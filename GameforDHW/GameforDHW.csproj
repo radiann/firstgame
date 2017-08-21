@@ -84,6 +84,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\C\AIManager.cs" />
     <Compile Include="Assets\C\ButtonManager.cs" />
     <Compile Include="Assets\C\CanvasManager.cs" />
     <Compile Include="Assets\C\ImageRotate.cs" />

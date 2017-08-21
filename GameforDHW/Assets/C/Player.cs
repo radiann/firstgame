@@ -5,6 +5,9 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour {
     Animator animator;
     public UIMnager sync;
+    public int playerHP;
+    public float playerAP;
+    public float playerAS;
     // Use this for initialization
     void Start()
     {
