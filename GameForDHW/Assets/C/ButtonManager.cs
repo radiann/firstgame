@@ -22,6 +22,17 @@ public class ButtonManager : MonoBehaviour {
             storybutton2.interactable = true;
         }
 	}
+    public void JobSelect()
+    {
+        UImanager.JobPanel.GetComponent<CanvasGroup>().alpha = 1;
+    }
+    public void Jobback()
+    {
+        UImanager.JobPanel.GetComponent<CanvasGroup>().alpha = 0;
+    }
+    /// <summary>
+    /// GameSelect
+    /// </summary>
     public void Storybutton1()
     {
         UImanager.finishikaisou = 5;
@@ -30,6 +41,9 @@ public class ButtonManager : MonoBehaviour {
     {
         UImanager.finishikaisou = 10;
     }
+    /// <summary>
+    /// Item
+    /// </summary>
     public void sarubezi()
     {
         //UImanager.gamemode = false;

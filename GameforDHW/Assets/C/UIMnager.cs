@@ -15,7 +15,7 @@ public class UIMnager : MonoBehaviour {
     //public System.DateTime PlayTime;
     public GameObject SIRO;
     public GameObject Mainpanel,Panel1,Panel2,Panel3,Panel4,Panel5,Gamepanel,Resultpanel;
-    public GameObject ItemPanel,BukiItemPanel,MonsterItemPanel;
+    public GameObject ItemPanel,BukiItemPanel,MonsterItemPanel,JobPanel;
     public GameObject storyscroll,kaisouscroll;
     private bool Itempanelopen,Bukiitempanelopen,Monsteritempanelopen;
     public GameObject prevpanel;
@@ -42,6 +42,8 @@ public class UIMnager : MonoBehaviour {
         Panel1.GetComponent<CanvasGroup>().alpha = 0;
         Panel2.SetActive(true);
         Panel2.GetComponent<CanvasGroup>().alpha = 0;
+        JobPanel.SetActive(true);
+        JobPanel.GetComponent<CanvasGroup>().alpha = 0;
         Panel3.SetActive(false);
         //Panel3.GetComponent<CanvasGroup>().alpha = 0;
         Panel4.SetActive(true);
@@ -112,8 +114,6 @@ public class UIMnager : MonoBehaviour {
         }
 
 
-        Debug.Log("Savero" + saveimagerotation);
-        Debug.Log("Nextro" + nextimagerotation);
         /* if (Input.touchCount > 0)
          {
              Touch touch = Input.GetTouch(0);
@@ -165,6 +165,7 @@ public class UIMnager : MonoBehaviour {
         }*/
         KAISOU.text = kaisou.ToString();
         Debug.Log(finishikaisou);
+        
         if(gamemode == true && kaisou != finishikaisou)
         {
             Timer = true;
@@ -244,8 +245,8 @@ public class UIMnager : MonoBehaviour {
             case 0:
                 Panel3.SetActive(false);
                 PlayerRenderer.enabled = false;
-                Mainpanel.GetComponent<CanvasGroup>().alpha = 1;
                 prevpanel.GetComponent<CanvasGroup>().alpha = 0;
+                Mainpanel.GetComponent<CanvasGroup>().alpha = 1;
                 prevpanel.GetComponent<Image>().raycastTarget = false;
                 MainPANEL = true;
                 break;
