@@ -85,12 +85,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\C\AIManager.cs" />
+    <Compile Include="Assets\C\AIStatus.cs" />
     <Compile Include="Assets\C\ButtonManager.cs" />
     <Compile Include="Assets\C\CanvasManager.cs" />
     <Compile Include="Assets\C\ImageRotate.cs" />
     <Compile Include="Assets\C\Item.cs" />
     <Compile Include="Assets\C\ItemManager.cs" />
-    <Compile Include="Assets\C\Player.cs" />
+    <Compile Include="Assets\C\PlayerManager.cs" />
+    <Compile Include="Assets\C\PlayerStatus.cs" />
     <Compile Include="Assets\C\SiroAnimation.cs" />
     <Compile Include="Assets\C\Slot.cs" />
     <Compile Include="Assets\C\UIMnager.cs" />

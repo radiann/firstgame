@@ -11,7 +11,7 @@ public class UIMnager : MonoBehaviour {
     private float fade3 = 0;
     private bool isPlaying = false;
     public Text KAISOU;
-    public int kaisou,finishikaisou,rememberkaisou;
+    public int kaisou,finishikaisou,rememberkaisou,kaisouspeed;
     //public System.DateTime PlayTime;
     public GameObject SIRO;
     public GameObject Mainpanel,Panel1,Panel2,Panel3,Panel4,Panel5,Gamepanel,Resultpanel;
@@ -22,7 +22,7 @@ public class UIMnager : MonoBehaviour {
     public int PanelNumber;
     public GameObject Stage1, Stage2, Stage3, Stage4;
     private Vector3 Stage1setposition, Stage2setposition, Stage3setposition, Stage4setposition;
-    public bool directionChosen;
+    public bool directionChosen, isDie;
     public bool gamemode, Timer, fight, takara,Actionmode,attack,damage, MainPANEL = true;
     public ItemManager ResultInventory,ItemInventory,BukiItemInventory,MonsterItemInventory;
     private float itemruting = 0f, actiontime = 0f, kaisoutime = 0f, saveimagerotation, nextimagerotation;
@@ -31,6 +31,10 @@ public class UIMnager : MonoBehaviour {
     public GameObject Playerset;
     float test = 0;
     public SpriteRenderer PlayerRenderer;
+    public PlayerManager PM;
+    public AIManager AM;
+    public PlayerStatus PS;
+    public AIStatus AS;
     // Use this for initialization
     void Start () {
         //GetComponent<Canvas>().enabled = false;
@@ -80,6 +84,11 @@ public class UIMnager : MonoBehaviour {
         Stage3setposition = Stage3.transform.position;
         Stage4setposition = Stage4.transform.position;
         saveimagerotation = 0.0f;
+        PM.GetComponent<PlayerManager>();
+        AM.GetComponent<AIManager>();
+        PS.GetComponent<PlayerStatus>();
+        AS.GetComponent<AIStatus>();
+        kaisouspeed = 1;
     }
 
     // Update is called once per frame
@@ -164,12 +173,12 @@ public class UIMnager : MonoBehaviour {
             Debug.Log("aa");
         }*/
         KAISOU.text = kaisou.ToString();
-        Debug.Log(finishikaisou);
-        
-        if(gamemode == true && kaisou != finishikaisou)
+        // Debug.Log(finishikaisou);
+       
+        if(gamemode == true && kaisou != finishikaisou && PM.isDead == false)
         {
             Timer = true;
-            kaisoutime += Time.deltaTime;
+            kaisoutime += Time.deltaTime *kaisouspeed;
             if(kaisoutime >= 5+kaisou * 3)
             {
                 kaisou+=1;
@@ -177,20 +186,20 @@ public class UIMnager : MonoBehaviour {
                 rememberkaisou = kaisou;
             }
         }
-        else if(gamemode == true && kaisou <= finishikaisou)
+        else if(gamemode == true && kaisou <= finishikaisou && PM.isDead == false)
         {
             Timer = false;
             kaisoutime = 0;
             Resultpanel.GetComponent<CanvasGroup>().alpha = 1;
         }
-        if (gamemode == true && Timer == true && itemruting + actiontime < Time.time && Actionmode == false)
+        if (gamemode == true && Timer == true && itemruting + actiontime < Time.time && Actionmode == false && PM.isDead == false)
         {
 
             float actioncount = Random.Range(0, 29);
             if(actioncount <= 15)
             {
                 itemruting = Time.time;
-                actiontime = Random.Range(5, 10);
+                actiontime = Random.Range(2,8);
                 float rand = Random.Range(0, 99);
                 if (rand <= 33)
                 {
@@ -211,10 +220,9 @@ public class UIMnager : MonoBehaviour {
             }
             else
             {
-                actiontime = Random.Range(5, 10);
+                actiontime = Random.Range(2, 8);
                 itemruting = Time.time;
                 Actionmode = true;
-                test = Random.Range(0, 10);
                 Invoke("TEST",1f);
             }
         }
@@ -450,14 +458,25 @@ public class UIMnager : MonoBehaviour {
     public void TEST()
     {
 
-        if (test <= 4)
+         /*if (test <= 4)
+         {
+             attack = true;
+         }
+         else
+         {
+             damage = true;
+         }*/
+        if(PM.playerhp != 0)
         {
-            attack = true;
+                
+               test = AM.Aihp/PS.PlayerAP *PS.PlayerAS;
+               PM.playerhp -= test * (AS.AIAP*AS.AIAS);
         }
         else
         {
-            damage = true;
+            return;
         }
+        attack = true;
         float rand = Random.Range(0, 99);
         if (rand <= 33)
         {

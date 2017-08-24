@@ -35,10 +35,12 @@ public class ButtonManager : MonoBehaviour {
     /// </summary>
     public void Storybutton1()
     {
+        UImanager.kaisou = 1;
         UImanager.finishikaisou = 5;
     }
     public void Storybutton2()
     {
+        UImanager.kaisou = 5;
         UImanager.finishikaisou = 10;
     }
     /// <summary>
@@ -46,12 +48,22 @@ public class ButtonManager : MonoBehaviour {
     /// </summary>
     public void sarubezi()
     {
-        //UImanager.gamemode = false;
+        if (UImanager.isDie == true)
+        {
+            UImanager.gamemode = false;
+            UImanager.Timer = false;
+            UImanager.Resultpanel.GetComponent<CanvasGroup>().alpha = 1;
+        }
+
     }
     public void ItemReturn()
     {
         UImanager.gamemode = false;
         UImanager.Timer = false;
         UImanager.Resultpanel.GetComponent<CanvasGroup>().alpha = 1;
+    }
+    public void timespeed()
+    {
+        UImanager.kaisouspeed = 2;
     }
 }
