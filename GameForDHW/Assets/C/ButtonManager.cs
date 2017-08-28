@@ -43,6 +43,16 @@ public class ButtonManager : MonoBehaviour {
         UImanager.kaisou = 5;
         UImanager.finishikaisou = 10;
     }
+    public void Stage1Select()
+    {
+        UImanager.Stage1Image.enabled = true;
+        UImanager.Stage2Image.enabled = false;
+    }
+    public void Stage2Select()
+    {
+        UImanager.Stage1Image.enabled = false;
+        UImanager.Stage2Image.enabled = true;
+    }
     /// <summary>
     /// Item
     /// </summary>

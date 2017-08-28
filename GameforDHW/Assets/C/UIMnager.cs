@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIMnager : MonoBehaviour {
     public Image FadeImage,RotationImageSet,Rotationimage1, Rotationimage2, Rotationimage3, Rotationimage4, Rotationimage5, Rotationimage6;
-    public int itemcount = 0;
-    public int item1count, item2count, item3count;
+    public Image Stage1Image, Stage2Image;
+    public int StageSelectNum = 0;
+    public int item1count, item2count, item3count,itemcount;
     private float fade1 = 0;
     private float fade2 = 1;
     private float fade3 = 0;
@@ -89,6 +90,7 @@ public class UIMnager : MonoBehaviour {
         PS.GetComponent<PlayerStatus>();
         AS.GetComponent<AIStatus>();
         kaisouspeed = 1;
+        itemcount = 0;
     }
 
     // Update is called once per frame
@@ -354,6 +356,7 @@ public class UIMnager : MonoBehaviour {
         {
             PanelNumber = 6;
             prevpanel = Gamepanel;
+
         }
 
     }
