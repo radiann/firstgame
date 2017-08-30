@@ -11,8 +11,8 @@ public class UIMnager : MonoBehaviour {
     private float fade2 = 1;
     private float fade3 = 0;
     private bool isPlaying = false;
-    public Text KAISOU;
-    public int kaisou,finishikaisou,rememberkaisou,kaisouspeed;
+    public Text KAISOU,GOLD;
+    public int kaisou,finishikaisou,rememberkaisou,kaisouspeed,rememberGold,PlayerGold;
     //public System.DateTime PlayTime;
     public GameObject SIRO;
     public GameObject Mainpanel,Panel1,Panel2,Panel3,Panel4,Panel5,Gamepanel,Resultpanel;
@@ -91,6 +91,10 @@ public class UIMnager : MonoBehaviour {
         AS.GetComponent<AIStatus>();
         kaisouspeed = 1;
         itemcount = 0;
+        if(rememberGold == 0)
+        {
+            PlayerGold = 0;
+        }
     }
 
     // Update is called once per frame
@@ -175,6 +179,7 @@ public class UIMnager : MonoBehaviour {
             Debug.Log("aa");
         }*/
         KAISOU.text = kaisou.ToString();
+        GOLD.text = "GOLD :" + rememberGold.ToString();
         // Debug.Log(finishikaisou);
        
         if(gamemode == true && kaisou != finishikaisou && PM.isDead == false)
@@ -202,21 +207,25 @@ public class UIMnager : MonoBehaviour {
             {
                 itemruting = Time.time;
                 actiontime = Random.Range(2,8);
-                float rand = Random.Range(0, 99);
-                if (rand <= 33)
+                int rand = Random.Range(0, 99);
+                if (rand <= 22)
                 {
                     ResultInventory.AddItem(itemmana1.GetComponent<Item>());
                     item1count++;
                 }
-                else if (rand >= 34 && rand <= 67)
+                else if (rand >= 23 && rand <= 46)
                 {
                     ResultInventory.AddItem(itemmana2.GetComponent<Item>());
                     item2count++;
                 }
-                else
+                else if ( rand>= 47 && rand <= 69)
                 {
                     ResultInventory.AddItem(itemmana3.GetComponent<Item>());
                     item3count++;
+                }
+                else
+                {
+                    Goldmanager();
                 }
                 itemcount++;
             }
@@ -485,17 +494,25 @@ public class UIMnager : MonoBehaviour {
         {
             ResultInventory.AddItem(itemmana1.GetComponent<Item>());
             item1count++;
+            Goldmanager();
         }
         else if (rand >= 34 && rand <= 67)
         {
             ResultInventory.AddItem(itemmana2.GetComponent<Item>());
             item2count++;
+            Goldmanager();
         }
         else
         {
             ResultInventory.AddItem(itemmana3.GetComponent<Item>());
             item3count++;
+            Goldmanager();
         }
         itemcount++;
+    }
+    public void Goldmanager()
+    {
+        PlayerGold = Random.Range(kaisou, kaisou + 10);
+        rememberGold += PlayerGold;
     }
 }
