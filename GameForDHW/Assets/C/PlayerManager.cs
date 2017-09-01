@@ -22,6 +22,10 @@ public class PlayerManager : MonoBehaviour {
    
 	// Update is called once per frame
 	void Update () {
+        if (sync.gamemode == false)
+        {
+            playerhp = PS.PlayerHP;
+        }
         if (sync.Actionmode == true&& sync.gamemode ==true)
         {
             animator.SetBool("Move", false);

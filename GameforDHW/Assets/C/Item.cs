@@ -4,11 +4,12 @@ using UnityEngine;
 
 public enum ItemType { STONE, FULL,RING };
 public class Item : MonoBehaviour {
+
     public ItemType type;
     public Sprite spriteNeutral;
     public Sprite spriteHighlighted;
     public int maxSize;
-
+    public Item item;
 public void Use()
     {
         switch (type)

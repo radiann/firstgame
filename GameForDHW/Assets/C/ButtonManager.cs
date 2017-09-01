@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ButtonManager : MonoBehaviour {
     public UIMnager UImanager;
     public Button storybutton2;
+    public PlayerStatus status;
 	// Use this for initialization
 	void Start () {
         UImanager.GetComponent<UIMnager>();
@@ -29,6 +30,30 @@ public class ButtonManager : MonoBehaviour {
     public void Jobback()
     {
         UImanager.JobPanel.GetComponent<CanvasGroup>().alpha = 0;
+    }
+    public void HPAdd()
+    {
+        status.PlayerHP += 1;
+    }
+    public void HPSub()
+    {
+        status.PlayerHP -= 1;
+    }
+    public void APAdd()
+    {
+        status.PlayerAP += 1;
+    }
+    public void APSub()
+    {
+        status.PlayerAP -= 1;
+    }
+    public void LPAdd()
+    {
+        status.PlayerLP += 1;
+    }
+    public void LPSub()
+    {
+        status.PlayerLP -= 1;
     }
     /// <summary>
     /// GameSelect
