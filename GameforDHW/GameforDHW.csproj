@@ -88,8 +88,11 @@
     <Compile Include="Assets\C\AIStatus.cs" />
     <Compile Include="Assets\C\ButtonManager.cs" />
     <Compile Include="Assets\C\CanvasManager.cs" />
+    <Compile Include="Assets\C\Equipment.cs" />
+    <Compile Include="Assets\C\EquipmentManager.cs" />
     <Compile Include="Assets\C\ImageRotate.cs" />
     <Compile Include="Assets\C\Inventory.cs" />
+    <Compile Include="Assets\C\InventorySlot.cs" />
     <Compile Include="Assets\C\InventoryUI.cs" />
     <Compile Include="Assets\C\Item.cs" />
     <Compile Include="Assets\C\ItemC.cs" />

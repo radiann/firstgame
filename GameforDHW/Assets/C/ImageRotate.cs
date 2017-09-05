@@ -107,7 +107,7 @@ public class ImageRotate : MonoBehaviour {
             Timer = 0;
             istouch = false;
         }
-        if (istouch||kansei)
+        if (istouch || kansei)
         {
             if (direction.x < 0)
             {

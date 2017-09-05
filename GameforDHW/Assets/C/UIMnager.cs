@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using UnityEngine;
 using UnityEngine.UI;
 public class UIMnager : MonoBehaviour {
@@ -26,7 +27,7 @@ public class UIMnager : MonoBehaviour {
     public bool directionChosen, isDie;
     public bool gamemode, Timer, fight, takara,Actionmode,attack,damage, MainPANEL = true;
     public ItemManager ResultInventory,ItemInventory,BukiItemInventory,MonsterItemInventory;
-    private float itemruting = 0f, actiontime = 0f, kaisoutime = 0f, saveimagerotation, nextimagerotation;
+    private float itemruting = 0f, actiontime = 0f, kaisoutime = 0f, nextimagesrotation, nextimagerotation;
     //private float touchspeed = 0;
     public GameObject itemmana1, itemmana2, itemmana3;
     public GameObject Playerset;
@@ -84,7 +85,6 @@ public class UIMnager : MonoBehaviour {
         Stage2setposition = Stage2.transform.position;
         Stage3setposition = Stage3.transform.position;
         Stage4setposition = Stage4.transform.position;
-        saveimagerotation = 0.0f;
         PM.GetComponent<PlayerManager>();
         AM.GetComponent<AIManager>();
         PS.GetComponent<PlayerStatus>();
@@ -99,10 +99,15 @@ public class UIMnager : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        /*if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }*/
         if (MainPANEL)
         {
             SIRO.SetActive(true);
         }
+
         else
         {
             SIRO.SetActive(false);
@@ -110,22 +115,11 @@ public class UIMnager : MonoBehaviour {
         
         if (Input.GetMouseButtonDown(0))
         {
-           nextimagerotation += 60.0f;
-           
-           iTween.RotateTo(RotationImageSet.gameObject, iTween.Hash("z", nextimagerotation, "islocal", true));
-           if(nextimagerotation >= 360)
-            {
-                nextimagerotation = 0;
-            }
+            RRotateImages();  
         }
         if (Input.GetMouseButtonDown(1))
         {
-            nextimagerotation -= 60.0f;
-            iTween.RotateTo(RotationImageSet.gameObject, iTween.Hash("z", nextimagerotation, "islocal", true));
-            if (nextimagerotation <= -360)
-            {
-                nextimagerotation = 0;
-            }
+            LRotateImages();
         }
 
 
@@ -515,4 +509,39 @@ public class UIMnager : MonoBehaviour {
         PlayerGold = Random.Range(kaisou, kaisou + 10);
         rememberGold += PlayerGold;
     }
+    public void RRotateImages()
+    {
+        nextimagerotation += 60.0f;
+        nextimagesrotation -= 60.0f;
+        iTween.RotateTo(RotationImageSet.gameObject, iTween.Hash("z", nextimagerotation, "islocal", true));
+        iTween.RotateTo(Rotationimage1.gameObject, iTween.Hash("z", nextimagesrotation, "islocal", true));
+        iTween.RotateTo(Rotationimage2.gameObject, iTween.Hash("z", nextimagesrotation, "islocal", true));
+        iTween.RotateTo(Rotationimage3.gameObject, iTween.Hash("z", nextimagesrotation, "islocal", true));
+        iTween.RotateTo(Rotationimage4.gameObject, iTween.Hash("z", nextimagesrotation, "islocal", true));
+        iTween.RotateTo(Rotationimage5.gameObject, iTween.Hash("z", nextimagesrotation, "islocal", true));
+        iTween.RotateTo(Rotationimage6.gameObject, iTween.Hash("z", nextimagesrotation, "islocal", true));
+        if (nextimagerotation >= 360)
+        {
+            nextimagerotation = 0;
+            nextimagesrotation = 0;
+        }
+    }
+    public void LRotateImages()
+    {
+        nextimagerotation -= 60.0f;
+        nextimagesrotation += 60.0f;
+        iTween.RotateTo(RotationImageSet.gameObject, iTween.Hash("z", nextimagerotation, "islocal", true));
+        iTween.RotateTo(Rotationimage1.gameObject, iTween.Hash("z", nextimagesrotation, "islocal", true));
+        iTween.RotateTo(Rotationimage2.gameObject, iTween.Hash("z", nextimagesrotation, "islocal", true));
+        iTween.RotateTo(Rotationimage3.gameObject, iTween.Hash("z", nextimagesrotation, "islocal", true));
+        iTween.RotateTo(Rotationimage4.gameObject, iTween.Hash("z", nextimagesrotation, "islocal", true));
+        iTween.RotateTo(Rotationimage5.gameObject, iTween.Hash("z", nextimagesrotation, "islocal", true));
+        iTween.RotateTo(Rotationimage6.gameObject, iTween.Hash("z", nextimagesrotation, "islocal", true));
+        if (nextimagerotation <= -360)
+        {
+            nextimagerotation = 0;
+            nextimagesrotation = 0;
+        }
+    }
 }
+

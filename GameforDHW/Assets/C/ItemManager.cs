@@ -111,8 +111,8 @@ public class ItemManager : MonoBehaviour {
                     tmp.AddItem(item);
                     emptySlot--;
                     return true;
-                }
-            }
+               }
+           }
         }
         return false;
     }
