@@ -9,7 +9,6 @@ public class Item : MonoBehaviour {
     public Sprite spriteNeutral;
     public Sprite spriteHighlighted;
     public int maxSize;
-    public Item item;
 public void Use()
     {
         switch (type)

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Slot : MonoBehaviour {
     private Stack<Item> items;
-
+    private Stack<ItemC> items2;
     public Text stackTxt;
     public Sprite slotEmpty;
     public Sprite slotHighlight;
@@ -17,13 +17,26 @@ public class Slot : MonoBehaviour {
     {
         get { return CurrentItem.maxSize > items.Count; }
     }
+    public bool IsEmpty2
+    {
+        get { return items2.Count == 0; }
+    }
+    public bool IsAvailable2
+    {
+        get { return CurrentItem.maxSize > items2.Count; }
+    }
     public Item CurrentItem
     {
         get { return items.Peek(); }
     }
+    public ItemC CurrentItem2
+    {
+        get {return items2.Peek();}
+    }
 	// Use this for initialization
 	void Start () {
         items = new Stack<Item>();
+        items2 = new Stack<ItemC>();
         RectTransform slotRect = GetComponent<RectTransform>();
         RectTransform txtRect = stackTxt.GetComponent<RectTransform>();
 
@@ -35,10 +48,6 @@ public class Slot : MonoBehaviour {
 
     }
 
-    // Update is called once per frame
-    void Update () {
-		
-	}
     public void AddItem(Item item)
     {
         items.Push(item);
@@ -49,6 +58,16 @@ public class Slot : MonoBehaviour {
         }
 
         ChangeSprite(item.spriteNeutral, item.spriteHighlighted);
+    }
+    public void AddItem2(ItemC item)
+    {
+        items2.Push(item);
+
+        if (items2.Count > 1)
+        {
+            stackTxt.text = items2.Count.ToString();
+        }
+
     }
     private void ChangeSprite(Sprite neutral, Sprite highlight)
     {
